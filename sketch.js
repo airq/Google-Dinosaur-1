@@ -18,12 +18,16 @@ function setup() {
 function draw() {
   background(200);
 
-
-  if(Arrenemy[Arrenemy.length-1].x < 500){
+  let distance = floor(random(50))
+  if(Arrenemy[Arrenemy.length-1].x < 500+distance ){
+      enemy = new Cactus();
+      enemy.width+=floor(random(10));
+      enemy.height+=floor(random(10));
+      enemy.y= height- enemy.height;
       Arrenemy.push(enemy);
     }
 
-  accPlayer=accPlayer+0.1;
+  accPlayer=accPlayer+0.2;
   if (accPlayer>5){
     accPlayer=5;
   }
@@ -43,6 +47,7 @@ function draw() {
 
 function keyPressed(){
   if(key==" "){
-    accPlayer=accPlayer-4
+    if(playerY==150)
+    accPlayer=accPlayer-5
   }
 }
