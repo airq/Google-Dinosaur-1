@@ -4,7 +4,7 @@ function Cactus() {
   this.y = 170;
   this.width = 20;
   this.height= 30;
-  this.acc = 3;
+  this.acc = 5;
 
   this.show = function(){
     this.x = this.x - this.acc;
