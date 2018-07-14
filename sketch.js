@@ -14,6 +14,13 @@ let col;
 let score;
 let licznik;
 let hiScore;
+let alfa=50;
+let posGameOver=40;
+let resetButtonX;
+let resetButtonY;
+let resetButtonWidth=40;
+let resetButtonHeiht=40;
+let restartButton=10;
 
 function setup() {
   createCanvas(700,201);
@@ -22,10 +29,8 @@ function setup() {
   score=0;
   licznik=0;
   hiScore=0;
-  createP(" ");
-  restartButton = createButton("Restart");
-  restartButton.mousePressed(RestartGame);
-
+  resetButtonX=width/2-(resetButtonWidth/2);
+  resetButtonY=height/2;
 }
 
 function draw() {
@@ -68,17 +73,40 @@ function draw() {
     }
   }
   else{
+
+    for(let i=0; i<Arrenemy.length; i++){
+      Arrenemy[i].showGameOver();
+    }
+    fill(255);
+    rect(playerX, playerY, playerWidth, playerHeight)
+
+
     textSize(32);
     textAlign(CENTER);
-    fill(255,0,0);
-    text("Game Over", width/2, height/2);
+    fill(50,alfa);
+    text("Game Over", width/2, height/2+posGameOver-20);
+
     if(score>hiScore){
       hiScore=score;
     }
+
     if(score==hiScore){
       textSize(12);
-      text("New HiScore: " + hiScore, width/2, height/2+20);
+      text("New HiScore: " + hiScore, width/2, height/2+posGameOver);
+      restartButton=10;
     }
+
+    fill(100,alfa);
+    rect(resetButtonX, resetButtonY+restartButton+posGameOver, resetButtonWidth, resetButtonHeiht);
+
+    if(posGameOver>1){
+      posGameOver--
+    }
+
+    if(alfa<255){
+      alfa+=5;
+    }
+    restartButton=0;
   }
 
   textSize(16);
@@ -108,12 +136,22 @@ function keyPressed(){
   }
 }
 
+function mouseClicked(){
+  if(resetButtonX<mouseX && (resetButtonX+resetButtonY+restartButton+posGameOver)>mouseX && resetButtonY<mouseY && resetButtonY+resetButtonHeiht>mouseY){
+    RestartGame();
+  }
+}
+
 function RestartGame(){
-  Arrenemy = []
+  fill(150);
+  rect(resetButtonX, resetButtonY+restartButton+posGameOver, resetButtonWidth, resetButtonHeiht);
+  Arrenemy = [];
   enemy = new Cactus();
   Arrenemy.push(enemy);
   score=0;
   licznik=0;
+  accEnemy=5;
   col=0;
   playerY=10;
+  posGameOver=40;
 }
